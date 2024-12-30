@@ -10,9 +10,44 @@
     
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="styles.css">
+    <!-- 添加 D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
     <div id="map"></div>
+    <div id="controls-panel">
+        <div class="panel-header">
+            <h2>时间线控制</h2>
+        </div>
+        <div class="panel-content">
+            <div class="control-group">
+                <button id="show-all-btn" class="primary-btn">
+                    <span class="icon">📍</span>
+                    显示所有事件
+                </button>
+            </div>
+            <div class="control-group date-range">
+                <div class="date-input-group">
+                    <label for="start-date">开始日期</label>
+                    <input type="date" id="start-date" />
+                </div>
+                <div class="date-input-group">
+                    <label for="end-date">结束日期</label>
+                    <input type="date" id="end-date" />
+                </div>
+                <button id="filter-date-btn" class="primary-btn">
+                    <span class="icon">🔍</span>
+                    筛选时间段
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="timeline-container">
+        <div id="timeline"></div>
+        <div class="timeline-tip">
+            提示：使用鼠标滚轮可以缩放时间轴
+        </div>
+    </div>
 
     <!-- 引入 Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
