@@ -50,6 +50,9 @@ let events = [];
 let markers = [];
 let timelineChart; // 存储时间轴实例
 let currentEventIndex = -1; // 当前选中的事件索引
+let timelineSelection = null;
+let timelineHandles = null;
+let selectedTimeRange = null;
 
 // 保存当前状态到 localStorage
 function saveState() {
@@ -87,9 +90,6 @@ async function loadEvents() {
         // 按日期排序事件
         events.sort((a, b) => new Date(a.date) - new Date(b.date));
         
-        // 初始化日期选择器
-        initDatePickers();
-        
         // 添加事件标记
         events.forEach(event => {
             const marker = L.marker([event.location.latitude, event.location.longitude])
@@ -105,8 +105,9 @@ async function loadEvents() {
             markers.push(marker);
         });
         
-        initTimeline();
+        // 先显示所有标记，再初始化时间轴
         showAllMarkers();
+        initTimeline();
         initEventListeners();
 
         // 尝试恢复保存的状态，如果没有则显示最早的事件
@@ -142,10 +143,11 @@ function formatDate(date) {
 
 function initTimeline() {
     const dates = events.map(e => new Date(e.date));
-    const timeExtent = [d3.min(dates), new Date()]; // 使用当前日期作为终点
+    const minDate = d3.min(dates);
+    const maxDate = new Date(); // 使用当前日期作为终点
     
     const margin = {top: 20, right: 40, bottom: 20, left: 40};
-    const width = 800 - margin.left - margin.right;
+    const width = document.getElementById('timeline').clientWidth - margin.left - margin.right;
     const height = 100 - margin.top - margin.bottom;
     
     // 清除现有的时间轴
@@ -159,7 +161,7 @@ function initTimeline() {
     
     // 创建可缩放的时间比例尺
     const xScale = d3.scaleTime()
-        .domain(timeExtent)
+        .domain([minDate, maxDate])
         .range([0, width]);
     
     // 添加缩放行为
@@ -185,7 +187,7 @@ function initTimeline() {
     
     const gX = svg.append("g")
         .attr("class", "timeline-axis")
-        .attr("transform", `translate(0,${height/2})`);
+        .attr("transform", `translate(0,${height})`);
     
     const points = svg.append("g")
         .attr("class", "points");
@@ -198,6 +200,7 @@ function initTimeline() {
         .attr("class", "timeline-point")
         .attr("cx", d => xScale(new Date(d.date)))
         .attr("cy", height/2)
+        .attr("r", 6)
         .on("mouseover", function(event, d) {
             d3.select(this)
                 .transition()
@@ -228,10 +231,6 @@ function initTimeline() {
         gX.call(d3.axisBottom(newXScale).tickFormat(d3.timeFormat("%Y-%m-%d")));
         points.selectAll("circle")
             .attr("cx", d => newXScale(new Date(d.date)));
-        // 更新背景线
-        svg.select(".timeline-background-line")
-            .attr("x1", newXScale.range()[0])
-            .attr("x2", newXScale.range()[1]);
     }
     
     function updateAxis() {
@@ -252,6 +251,44 @@ function initTimeline() {
         height,
         margin
     };
+}
+
+function updateTimelineSelection(xScale) {
+    if (!xScale) {
+        const currentTransform = d3.zoomTransform(timelineChart.svg.node());
+        xScale = currentTransform.rescaleX(timelineChart.xScale);
+    }
+    
+    const startX = xScale(selectedTimeRange[0]);
+    const endX = xScale(selectedTimeRange[1]);
+    
+    timelineSelection
+        .attr("x", startX)
+        .attr("width", endX - startX);
+    
+    timelineHandles
+        .attr("x", (d, i) => (i === 0 ? startX : endX) - 5);
+}
+
+function filterByTimeRange() {
+    // 从地图上移除所有标记
+    markers.forEach(marker => map.removeLayer(marker));
+    
+    // 添加在时间范围内的标记
+    let hasVisibleMarkers = false;
+    events.forEach((event, index) => {
+        const eventDate = new Date(event.date);
+        if (eventDate >= selectedTimeRange[0] && eventDate <= selectedTimeRange[1]) {
+            markers[index].addTo(map);
+            hasVisibleMarkers = true;
+        }
+    });
+    
+    // 如果没有找到任何事件，显示所有标记
+    if (!hasVisibleMarkers) {
+        console.log('在选定时间范围内没有找到事件，显示所有标记');
+        showAllMarkers();
+    }
 }
 
 function showTooltip(event, data) {
@@ -319,12 +356,7 @@ function initEventListeners() {
     // 显示所有事件按钮
     document.getElementById('show-all-btn').addEventListener('click', () => {
         showAllMarkers();
-        // 重置时间轴缩放
-        timelineChart.svg.call(timelineChart.zoom.transform, d3.zoomIdentity);
     });
-    
-    // 日期筛选按钮
-    document.getElementById('filter-date-btn').addEventListener('click', filterByDateRange);
 
     // 主题切换按钮
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
