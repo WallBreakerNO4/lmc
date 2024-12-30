@@ -1,8 +1,43 @@
+// 主题切换相关函数
+function initTheme() {
+    // 检查本地存储中是否有保存的主题
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateMapTheme(savedTheme);
+    }
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateMapTheme(newTheme);
+}
+
+function updateMapTheme(theme) {
+    if (theme === 'dark') {
+        // 切换到暗色地图图层
+        map.removeLayer(map.tileLayer);
+        map.tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+    } else {
+        // 切换到亮色地图图层
+        map.removeLayer(map.tileLayer);
+        map.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    }
+}
+
 // 初始化地图
 const map = L.map('map').setView([35, 105], 4); // 将初始视图设置在中国中心位置
 
 // 添加OpenStreetMap图层
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+map.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
@@ -211,6 +246,9 @@ function initEventListeners() {
     
     // 日期筛选按钮
     document.getElementById('filter-date-btn').addEventListener('click', filterByDateRange);
+
+    // 主题切换按钮
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 }
 
 function filterMarkersByDate(selectedDate) {
@@ -238,5 +276,7 @@ function highlightPoint(element) {
     d3.select(element).classed("active", true);
 }
 
+// 初始化主题
+initTheme();
 // 加载事件数据
 loadEvents(); 
