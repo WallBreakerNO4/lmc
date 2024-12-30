@@ -363,15 +363,12 @@ function updateNavigationButtons() {
 }
 
 function filterMarkersByDate(selectedDate) {
-    // 从地图上移除所有标记
-    markers.forEach(marker => map.removeLayer(marker));
-    
-    // 找到选中日期的事件并显示对应标记
+    // 找到选中日期的事件
     const selectedEvent = events.find(e => e.date === selectedDate);
     if (selectedEvent) {
         currentEventIndex = events.indexOf(selectedEvent);
         const marker = markers[currentEventIndex];
-        marker.addTo(map);
+        // 设置地图视图到选中的事件位置
         map.setView([selectedEvent.location.latitude, selectedEvent.location.longitude], 8);
         marker.openPopup();
         updateNavigationButtons();
