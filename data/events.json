@@ -2,38 +2,38 @@
     "events": [
         {
             "event_name": "ARPANET诞生",
-            "description": "在美苏冷战引起军备竞赛的时代大背景下，现代互联网的前身'阿帕网（ARPA）'诞生了。加州大学洛杉矶分校（UCLA）第一节点与斯坦福研究院（SRI）第二节点首次连通。",
+            "description": "在美苏冷战引起军备竞赛的时代大背景下，现代互联网的前身'阿帕网（ARPA）'诞生了。随着加州大学洛杉矶分校（UCLA）第一节点与斯坦福研究院（SRI）第二节点的连通，人类第一次实现了分组交换网络的远程通讯。第一次联网实验本来计划输入并传输'LOGIN'5个字母，最终由于系统的中途崩溃，只传输了其中的前两个字母'LO'。",
             "date": "1969-10-29",
             "location": {
-                "latitude": 34.0689,
-                "longitude": -118.4452
+                "latitude": 34.05,
+                "longitude": -118.25
             }
         },
         {
             "event_name": "电子邮件发明",
-            "description": "雷·汤姆林森（Ray Tomlinson）发明了电子邮件，'@'这个字符第一次出现在人们的眼前。",
+            "description": "雷·汤姆林森（Ray Tomlinson）在马萨诸塞州的剑桥市发明了电子邮件，'@'这个字符第一次出现在人们的眼前，也拉开了人类新一次通信革命的序幕。",
             "date": "1971-01-01",
             "location": {
-                "latitude": 42.3601,
-                "longitude": -71.0589
+                "latitude": 42.360458,
+                "longitude": -71.057777
             }
         },
         {
             "event_name": "TCP/IP协议提出",
-            "description": "卡恩（Kahn）和瑟夫（Cerf）在IEEE期刊上发表论文，正式提出TCP/IP协议，为现代互联网奠定基础。",
+            "description": "任教于斯坦福大学的卡恩（Kahn）和瑟夫（Cerf）在IEEE期刊上，发表了一篇题为《关于分组交换的网络通信协议》的论文，正式提出TCP/IP协议，用以实现计算机网络之间的互联。而这一协议也成为了现代互联网的根基协议。",
             "date": "1974-01-01",
             "location": {
-                "latitude": 38.9072,
-                "longitude": -77.0369
+                "latitude": 34.05,
+                "longitude": -118.25
             }
         },
         {
             "event_name": "Internet正式命名",
-            "description": "阿帕网的研究人员正式把网络技术的研究成果定名为因特网（Internet）。",
+            "description": "阿帕网的研究人员正式把网络技术的研究成果定名为因特网（Internet）。次年，有更多的研究人员与在校大学生连入因特网，而这个网络也成为了真正意义上的'互联网'。",
             "date": "1980-01-01",
             "location": {
-                "latitude": 38.9072,
-                "longitude": -77.0369
+                "latitude": 38.895178,
+                "longitude": -77.036303
             }
         },
         {
@@ -41,49 +41,49 @@
             "description": "中国开通了自己的顶级域名'cn'，拥有了属于自己的网络名片。",
             "date": "1990-01-01",
             "location": {
-                "latitude": 39.9042,
-                "longitude": 116.4074
+                "latitude": 39.905556,
+                "longitude": 116.391389
             }
         },
         {
             "event_name": "万维网公开",
-            "description": "蒂姆·伯纳斯·李（Tim Berners-Lee）爵士将他发明的万维网（World Wide Web）公之于众。",
+            "description": "蒂姆·伯纳斯·李（Tim Berners-Lee）爵士将他发明的万维网（World Wide Web）公之于众，而这也标志着互联网第一次开始面向了群众。当代互联网常用的网址中的www就是李爵士所创造的万维网。",
             "date": "1991-08-23",
             "location": {
-                "latitude": 46.2324,
-                "longitude": 6.0559
+                "latitude": 46.20,
+                "longitude": 6.15
             }
         },
         {
             "event_name": "Amazon成立",
-            "description": "Amazon成立，开创了电子商务的新时代。同年，中国用户开始大规模入网，被称为中国互联网元年。",
+            "description": "Amazon成立。这个名不见经传的互联网书店在经营的一年后终于卖出了第一本书，从此互联网拥有了与现实沟通的能力。同年，中国用户开始大规模入网，而这一年也被称为中国互联网元年。",
             "date": "1994-01-01",
             "location": {
-                "latitude": 47.6062,
-                "longitude": -122.3321
+                "latitude": 47.60,
+                "longitude": -122.333333
             }
         },
         {
-            "event_name": "Yahoo!成立",
-            "description": "Yahoo！成立，标志着门户网站时代的开启。同年，Google的前身Page Rank系统和eBay相继问世。",
+            "event_name": "Yahoo!和Google时代开启",
+            "description": "Yahoo！成立，标志着门户网站的时代正式开启。同年，通过抓取互联网内容来确认链接的系统page rank问世，而这就是后来的科技巨头Google。eBay也在这一年问世，标志着互联网金融的兴起。",
             "date": "1995-01-01",
             "location": {
-                "latitude": 37.7749,
-                "longitude": -122.4194
+                "latitude": 37.377500,
+                "longitude": -122.067500
             }
         },
         {
             "event_name": "中国互联网企业崛起",
-            "description": "网易、搜狐、新浪等中国互联网企业相继成立，第一款网络游戏也在这一年问世。",
+            "description": "随着中国互联网用户井喷式的增加，大批企业涌现，网易（广州）、搜狐（北京）、新浪（北京）等门户网站均出现在这一年。同时，世界上第一款网络游戏也出现，标志着网络开始不仅仅作为通信与信息集成的工具与平台。",
             "date": "1997-01-01",
             "location": {
-                "latitude": 39.9042,
-                "longitude": 116.4074
+                "latitude": 39.905556,
+                "longitude": 116.391389
             }
         },
         {
             "event_name": "腾讯QQ和阿里巴巴成立",
-            "description": "腾讯QQ的前身OICQ出现，阿里巴巴成立，标志着中国进入互联网通信和电商时代。",
+            "description": "腾讯QQ的前身OICQ出现（深圳），标志着中国正式进入互联网通信时代。同年，阿里巴巴成立（杭州），中国用户也终于拥有了自己的网购平台。次年，模仿Google的搜索引擎百度诞生（北京）。",
             "date": "1999-01-01",
             "location": {
                 "latitude": 22.5431,
@@ -92,29 +92,47 @@
         },
         {
             "event_name": "维基百科诞生",
-            "description": "Wiki百科问世，开启了人类知识共享的新时代，Web2.0开始出现雏形。",
+            "description": "Wiki百科问世。Wiki给予了人们展示和交换自己的知识的平台，宣告着人类社会随着互联网的普及开始进入知识共享时代。Web2.0开始出现雏形。",
             "date": "2001-01-01",
             "location": {
-                "latitude": 37.7749,
-                "longitude": -122.4194
+                "latitude": 37.227928,
+                "longitude": -77.401927
             }
         },
         {
             "event_name": "Web2.0时代开启",
-            "description": "在加州召开Web2.0大会，标志着互联网进入2.0时代，用户开始从内容接收者转变为创造者。",
+            "description": "在旧金山召开了web2.0大会，人类开始进入互联网2.0时代。不同于互联网1.0的单向性和只读特征，互联网2.0开始有了人的输出，将人和网站的联系逐步变为人和人的联系。",
             "date": "2004-10-05",
             "location": {
-                "latitude": 37.7749,
-                "longitude": -122.4194
+                "latitude": 37.783333,
+                "longitude": -122.416667
+            }
+        },
+        {
+            "event_name": "Facebook成立",
+            "description": "Facebook成立在马萨诸塞州的剑桥市。以Facebook为代表的社交网络是web2.0的核心应用，代表着任何人都有权利与能力在互联网上输出自己的内容。次年，YouTube诞生，'人'的身份在互联网上再次被放大。",
+            "date": "2004-01-01",
+            "location": {
+                "latitude": 42.360458,
+                "longitude": -71.057777
             }
         },
         {
             "event_name": "第一代iPhone发布",
-            "description": "乔布斯展示了第一代苹果手机，开启了移动互联网时代。",
-            "date": "2007-01-01",
+            "description": "乔布斯展示了第一代苹果手机，互联网第一次如此真实的出现在了人们眼前。手机这一便携设备使得连入互联网的成本与难度大大降低，越来越多的人开始进入互联网。",
+            "date": "2007-01-09",
             "location": {
-                "latitude": 37.3318,
-                "longitude": -122.0312
+                "latitude": 37.783333,
+                "longitude": -122.416667
+            }
+        },
+        {
+            "event_name": "比特币概念诞生",
+            "description": "比特币（BTC）的概念在芬兰的赫尔辛基第一次出现，标志着虚拟货币正式向传统现实货币体系发起挑战。",
+            "date": "2008-01-01",
+            "location": {
+                "latitude": 60.166667,
+                "longitude": 24.95
             }
         }
     ]
