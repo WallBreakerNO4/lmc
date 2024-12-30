@@ -270,16 +270,36 @@ function filterByDateRange() {
     const startDate = new Date(document.getElementById('start-date').value);
     const endDate = new Date(document.getElementById('end-date').value);
     
+    // 添加日期验证
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        console.error('无效的日期范围');
+        return;
+    }
+    
+    if (startDate > endDate) {
+        console.error('开始日期不能晚于结束日期');
+        return;
+    }
+    
     // 从地图上移除所有标记
     markers.forEach(marker => map.removeLayer(marker));
     
     // 添加在日期范围内的标记
+    let hasVisibleMarkers = false;
     events.forEach((event, index) => {
         const eventDate = new Date(event.date);
         if (eventDate >= startDate && eventDate <= endDate) {
             markers[index].addTo(map);
+            hasVisibleMarkers = true;
         }
     });
+    
+    // 如果没有找到任何事件，显示所有标记
+    if (!hasVisibleMarkers) {
+        console.log('在选定日期范围内没有找到事件，显示所有标记');
+        showAllMarkers();
+        return;
+    }
     
     // 更新时间轴视图
     const newDomain = [startDate, endDate];
@@ -332,6 +352,11 @@ function showNextEvent() {
 }
 
 function showEventByIndex(index) {
+    // 如果之前有选中的事件，关闭其弹窗
+    if (currentEventIndex !== -1) {
+        markers[currentEventIndex].closePopup();
+    }
+
     if (index >= 0 && index < events.length) {
         currentEventIndex = index;
         const event = events[index];
@@ -366,11 +391,26 @@ function updateNavigationButtons() {
 }
 
 function filterMarkersByDate(selectedDate) {
+    // 如果已经选中了这个日期，则取消选中状态
+    if (currentEventIndex !== -1 && events[currentEventIndex].date === selectedDate) {
+        // 关闭当前打开的弹窗
+        markers[currentEventIndex].closePopup();
+        currentEventIndex = -1;
+        updateNavigationButtons();
+        return;
+    }
+
     // 找到选中日期的事件
     const selectedEvent = events.find(e => e.date === selectedDate);
     if (selectedEvent) {
+        // 如果之前有选中的事件，关闭其弹窗
+        if (currentEventIndex !== -1) {
+            markers[currentEventIndex].closePopup();
+        }
+        
         currentEventIndex = events.indexOf(selectedEvent);
         const marker = markers[currentEventIndex];
+        
         // 平滑地将事件位置移动到屏幕中心，保持当前缩放级别
         map.panTo([selectedEvent.location.latitude, selectedEvent.location.longitude], {
             animate: true,
