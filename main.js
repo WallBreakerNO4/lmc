@@ -50,9 +50,6 @@ let events = [];
 let markers = [];
 let timelineChart; // 存储时间轴实例
 let currentEventIndex = -1; // 当前选中的事件索引
-let timelineSelection = null;
-let timelineHandles = null;
-let selectedTimeRange = null;
 
 // 保存当前状态到 localStorage
 function saveState() {
@@ -120,27 +117,6 @@ async function loadEvents() {
     }
 }
 
-function initDatePickers() {
-    const dates = events.map(e => new Date(e.date));
-    const minDate = d3.min(dates);
-    const maxDate = new Date(); // 使用当前日期作为最大值
-    
-    const startDatePicker = document.getElementById('start-date');
-    const endDatePicker = document.getElementById('end-date');
-    
-    startDatePicker.value = formatDate(minDate);
-    endDatePicker.value = formatDate(maxDate);
-    
-    startDatePicker.min = formatDate(minDate);
-    startDatePicker.max = formatDate(maxDate);
-    endDatePicker.min = formatDate(minDate);
-    endDatePicker.max = formatDate(maxDate);
-}
-
-function formatDate(date) {
-    return date.toISOString().split('T')[0];
-}
-
 function initTimeline() {
     const dates = events.map(e => new Date(e.date));
     const minDate = d3.min(dates);
@@ -184,7 +160,7 @@ function initTimeline() {
         .attr("y1", height/2)
         .attr("x2", width)
         .attr("y2", height/2);
-    
+
     const gX = svg.append("g")
         .attr("class", "timeline-axis")
         .attr("transform", `translate(0,${height})`);
@@ -232,7 +208,7 @@ function initTimeline() {
         points.selectAll("circle")
             .attr("cx", d => newXScale(new Date(d.date)));
     }
-    
+
     function updateAxis() {
         const xAxis = d3.axisBottom(xScale)
             .ticks(10)
@@ -253,44 +229,6 @@ function initTimeline() {
     };
 }
 
-function updateTimelineSelection(xScale) {
-    if (!xScale) {
-        const currentTransform = d3.zoomTransform(timelineChart.svg.node());
-        xScale = currentTransform.rescaleX(timelineChart.xScale);
-    }
-    
-    const startX = xScale(selectedTimeRange[0]);
-    const endX = xScale(selectedTimeRange[1]);
-    
-    timelineSelection
-        .attr("x", startX)
-        .attr("width", endX - startX);
-    
-    timelineHandles
-        .attr("x", (d, i) => (i === 0 ? startX : endX) - 5);
-}
-
-function filterByTimeRange() {
-    // 从地图上移除所有标记
-    markers.forEach(marker => map.removeLayer(marker));
-    
-    // 添加在时间范围内的标记
-    let hasVisibleMarkers = false;
-    events.forEach((event, index) => {
-        const eventDate = new Date(event.date);
-        if (eventDate >= selectedTimeRange[0] && eventDate <= selectedTimeRange[1]) {
-            markers[index].addTo(map);
-            hasVisibleMarkers = true;
-        }
-    });
-    
-    // 如果没有找到任何事件，显示所有标记
-    if (!hasVisibleMarkers) {
-        console.log('在选定时间范围内没有找到事件，显示所有标记');
-        showAllMarkers();
-    }
-}
-
 function showTooltip(event, data) {
     const tooltip = d3.select("body").append("div")
         .attr("class", "timeline-tooltip")
@@ -308,56 +246,7 @@ function hideTooltip() {
     d3.selectAll(".timeline-tooltip").remove();
 }
 
-function filterByDateRange() {
-    const startDate = new Date(document.getElementById('start-date').value);
-    const endDate = new Date(document.getElementById('end-date').value);
-    
-    // 添加日期验证
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        console.error('无效的日期范围');
-        return;
-    }
-    
-    if (startDate > endDate) {
-        console.error('开始日期不能晚于结束日期');
-        return;
-    }
-    
-    // 从地图上移除所有标记
-    markers.forEach(marker => map.removeLayer(marker));
-    
-    // 添加在日期范围内的标记
-    let hasVisibleMarkers = false;
-    events.forEach((event, index) => {
-        const eventDate = new Date(event.date);
-        if (eventDate >= startDate && eventDate <= endDate) {
-            markers[index].addTo(map);
-            hasVisibleMarkers = true;
-        }
-    });
-    
-    // 如果没有找到任何事件，显示所有标记
-    if (!hasVisibleMarkers) {
-        console.log('在选定日期范围内没有找到事件，显示所有标记');
-        showAllMarkers();
-        return;
-    }
-    
-    // 更新时间轴视图
-    const newDomain = [startDate, endDate];
-    timelineChart.xScale.domain(newDomain);
-    timelineChart.svg.call(timelineChart.zoom.transform, d3.zoomIdentity);
-    timelineChart.gX.call(d3.axisBottom(timelineChart.xScale).tickFormat(d3.timeFormat("%Y")));
-    timelineChart.points.selectAll("circle")
-        .attr("cx", d => timelineChart.xScale(new Date(d.date)));
-}
-
 function initEventListeners() {
-    // 显示所有事件按钮
-    document.getElementById('show-all-btn').addEventListener('click', () => {
-        showAllMarkers();
-    });
-
     // 主题切换按钮
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
@@ -397,15 +286,20 @@ function showEventByIndex(index) {
     if (index >= 0 && index < events.length) {
         currentEventIndex = index;
         const event = events[index];
+        const marker = markers[index];
         
-        // 平滑地将事件位置移动到屏幕中心，保持当前缩放级别
-        map.panTo([event.location.latitude, event.location.longitude], {
-            animate: true,
-            duration: 0.5
-        });
+        // 直接将事件位置设置在地图中心
+        map.setView(
+            [event.location.latitude, event.location.longitude],
+            map.getZoom(),
+            {
+                animate: true,
+                duration: 0.5
+            }
+        );
         
         // 打开对应的标记弹窗
-        markers[index].openPopup();
+        marker.openPopup();
         
         // 高亮时间轴上的点
         d3.selectAll('.timeline-point').classed('active', false);
@@ -414,7 +308,6 @@ function showEventByIndex(index) {
         // 更新导航按钮状态
         updateNavigationButtons();
         
-        // 保存当前状态
         saveState();
     }
 }
@@ -448,11 +341,16 @@ function filterMarkersByDate(selectedDate) {
         currentEventIndex = events.indexOf(selectedEvent);
         const marker = markers[currentEventIndex];
         
-        // 平滑地将事件位置移动到屏幕中心，保持当前缩放级别
-        map.panTo([selectedEvent.location.latitude, selectedEvent.location.longitude], {
-            animate: true,
-            duration: 0.5
-        });
+        // 直接将事件位置设置在地图中心
+        map.setView(
+            [selectedEvent.location.latitude, selectedEvent.location.longitude],
+            map.getZoom(),
+            {
+                animate: true,
+                duration: 0.5
+            }
+        );
+        
         marker.openPopup();
         updateNavigationButtons();
     }
