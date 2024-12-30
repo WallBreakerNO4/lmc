@@ -46,12 +46,41 @@ let markers = [];
 let timelineChart; // 存储时间轴实例
 let currentEventIndex = -1; // 当前选中的事件索引
 
+// 保存当前状态到 localStorage
+function saveState() {
+    const state = {
+        currentEventIndex: currentEventIndex,
+        mapCenter: map.getCenter(),
+        mapZoom: map.getZoom()
+    };
+    localStorage.setItem('appState', JSON.stringify(state));
+}
+
+// 从 localStorage 恢复状态
+function restoreState() {
+    const savedState = localStorage.getItem('appState');
+    if (savedState) {
+        const state = JSON.parse(savedState);
+        // 恢复地图状态
+        map.setView([state.mapCenter.lat, state.mapCenter.lng], state.mapZoom);
+        // 如果有保存的事件索引，显示该事件
+        if (state.currentEventIndex >= 0) {
+            showEventByIndex(state.currentEventIndex);
+        }
+        return state.currentEventIndex;
+    }
+    return -1;
+}
+
 // 修改 loadEvents 函数
 async function loadEvents() {
     try {
         const response = await fetch('data/events.json');
         const data = await response.json();
         events = data.events;
+        
+        // 按日期排序事件
+        events.sort((a, b) => new Date(a.date) - new Date(b.date));
         
         // 初始化日期选择器
         initDatePickers();
@@ -74,6 +103,12 @@ async function loadEvents() {
         initTimeline();
         showAllMarkers();
         initEventListeners();
+
+        // 尝试恢复保存的状态，如果没有则显示最早的事件
+        const restoredIndex = restoreState();
+        if (restoredIndex === -1) {
+            showEventByIndex(0); // 显示最早的事件
+        }
     } catch (error) {
         console.error('加载事件数据失败:', error);
     }
@@ -272,6 +307,12 @@ function initEventListeners() {
     // 添加导航按钮事件监听
     document.getElementById('prev-event').addEventListener('click', showPreviousEvent);
     document.getElementById('next-event').addEventListener('click', showNextEvent);
+
+    // 添加地图移动结束事件监听
+    map.on('moveend', saveState);
+    
+    // 添加地图缩放结束事件监听
+    map.on('zoomend', saveState);
 }
 
 function showPreviousEvent() {
@@ -291,21 +332,26 @@ function showNextEvent() {
 }
 
 function showEventByIndex(index) {
-    // 从地图上移除所有标记
-    markers.forEach(marker => map.removeLayer(marker));
-    
-    // 显示选中事件的标记
-    const event = events[index];
-    const marker = markers[index];
-    marker.addTo(map);
-    map.setView([event.location.latitude, event.location.longitude], 8);
-    marker.openPopup();
-
-    // 高亮时间轴上的点
-    d3.selectAll(".timeline-point").classed("active", false);
-    d3.selectAll(".timeline-point")
-        .filter((d, i) => i === index)
-        .classed("active", true);
+    if (index >= 0 && index < events.length) {
+        currentEventIndex = index;
+        const event = events[index];
+        
+        // 更新地图视图
+        map.setView([event.location.latitude, event.location.longitude], 6);
+        
+        // 打开对应的标记弹窗
+        markers[index].openPopup();
+        
+        // 高亮时间轴上的点
+        d3.selectAll('.timeline-point').classed('active', false);
+        d3.select(timelineChart.points.selectAll('circle').nodes()[index]).classed('active', true);
+        
+        // 更新导航按钮状态
+        updateNavigationButtons();
+        
+        // 保存当前状态
+        saveState();
+    }
 }
 
 function updateNavigationButtons() {
