@@ -1,26 +1,121 @@
 {
     "events": [
         {
-            "event_name": "中国接入互联网",
-            "description": "1994年4月20日，中国通过Sprint公司连入Internet，实现了与Internet的全功能连接。",
-            "date": "1994-04-20",
+            "event_name": "ARPANET诞生",
+            "description": "在美苏冷战引起军备竞赛的时代大背景下，现代互联网的前身'阿帕网（ARPA）'诞生了。加州大学洛杉矶分校（UCLA）第一节点与斯坦福研究院（SRI）第二节点首次连通。",
+            "date": "1969-10-29",
+            "location": {
+                "latitude": 34.0689,
+                "longitude": -118.4452
+            }
+        },
+        {
+            "event_name": "电子邮件发明",
+            "description": "雷·汤姆林森（Ray Tomlinson）发明了电子邮件，'@'这个字符第一次出现在人们的眼前。",
+            "date": "1971-01-01",
+            "location": {
+                "latitude": 42.3601,
+                "longitude": -71.0589
+            }
+        },
+        {
+            "event_name": "TCP/IP协议提出",
+            "description": "卡恩（Kahn）和瑟夫（Cerf）在IEEE期刊上发表论文，正式提出TCP/IP协议，为现代互联网奠定基础。",
+            "date": "1974-01-01",
+            "location": {
+                "latitude": 38.9072,
+                "longitude": -77.0369
+            }
+        },
+        {
+            "event_name": "Internet正式命名",
+            "description": "阿帕网的研究人员正式把网络技术的研究成果定名为因特网（Internet）。",
+            "date": "1980-01-01",
+            "location": {
+                "latitude": 38.9072,
+                "longitude": -77.0369
+            }
+        },
+        {
+            "event_name": "中国顶级域名启用",
+            "description": "中国开通了自己的顶级域名'cn'，拥有了属于自己的网络名片。",
+            "date": "1990-01-01",
             "location": {
                 "latitude": 39.9042,
                 "longitude": 116.4074
-            },
-            "image": "data/images/china-internet.jpg",
-            "source": "https://example.com"
+            }
         },
         {
-            "event_name": "万维网诞生",
-            "description": "1989年，蒂姆·伯纳斯-李在欧洲核子研究中心（CERN）发明了万维网。",
-            "date": "1989-03-12",
+            "event_name": "万维网公开",
+            "description": "蒂姆·伯纳斯·李（Tim Berners-Lee）爵士将他发明的万维网（World Wide Web）公之于众。",
+            "date": "1991-08-23",
             "location": {
                 "latitude": 46.2324,
                 "longitude": 6.0559
-            },
-            "image": "data/images/www-birth.jpg",
-            "source": "https://example.com"
+            }
+        },
+        {
+            "event_name": "Amazon成立",
+            "description": "Amazon成立，开创了电子商务的新时代。同年，中国用户开始大规模入网，被称为中国互联网元年。",
+            "date": "1994-01-01",
+            "location": {
+                "latitude": 47.6062,
+                "longitude": -122.3321
+            }
+        },
+        {
+            "event_name": "Yahoo!成立",
+            "description": "Yahoo！成立，标志着门户网站时代的开启。同年，Google的前身Page Rank系统和eBay相继问世。",
+            "date": "1995-01-01",
+            "location": {
+                "latitude": 37.7749,
+                "longitude": -122.4194
+            }
+        },
+        {
+            "event_name": "中国互联网企业崛起",
+            "description": "网易、搜狐、新浪等中国互联网企业相继成立，第一款网络游戏也在这一年问世。",
+            "date": "1997-01-01",
+            "location": {
+                "latitude": 39.9042,
+                "longitude": 116.4074
+            }
+        },
+        {
+            "event_name": "腾讯QQ和阿里巴巴成立",
+            "description": "腾讯QQ的前身OICQ出现，阿里巴巴成立，标志着中国进入互联网通信和电商时代。",
+            "date": "1999-01-01",
+            "location": {
+                "latitude": 22.5431,
+                "longitude": 114.0579
+            }
+        },
+        {
+            "event_name": "维基百科诞生",
+            "description": "Wiki百科问世，开启了人类知识共享的新时代，Web2.0开始出现雏形。",
+            "date": "2001-01-01",
+            "location": {
+                "latitude": 37.7749,
+                "longitude": -122.4194
+            }
+        },
+        {
+            "event_name": "Web2.0时代开启",
+            "description": "在加州召开Web2.0大会，标志着互联网进入2.0时代，用户开始从内容接收者转变为创造者。",
+            "date": "2004-10-05",
+            "location": {
+                "latitude": 37.7749,
+                "longitude": -122.4194
+            }
+        },
+        {
+            "event_name": "第一代iPhone发布",
+            "description": "乔布斯展示了第一代苹果手机，开启了移动互联网时代。",
+            "date": "2007-01-01",
+            "location": {
+                "latitude": 37.3318,
+                "longitude": -122.0312
+            }
         }
     ]
 } 
