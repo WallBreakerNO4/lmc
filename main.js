@@ -126,12 +126,21 @@ function initTimeline() {
         .scaleExtent([1, 20])
         .on("zoom", zoomed);
     
+    // 添加背景
     svg.append("rect")
         .attr("class", "zoom-area")
         .attr("width", width)
         .attr("height", height)
         .attr("fill", "none")
         .attr("pointer-events", "all");
+    
+    // 添加时间轴背景线
+    svg.append("line")
+        .attr("class", "timeline-background-line")
+        .attr("x1", 0)
+        .attr("y1", height/2)
+        .attr("x2", width)
+        .attr("y2", height/2);
     
     const gX = svg.append("g")
         .attr("class", "timeline-axis")
@@ -148,13 +157,18 @@ function initTimeline() {
         .attr("class", "timeline-point")
         .attr("cx", d => xScale(new Date(d.date)))
         .attr("cy", height/2)
-        .attr("r", 6)
         .on("mouseover", function(event, d) {
-            d3.select(this).attr("r", 8);
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr("r", 8);
             showTooltip(event, d);
         })
         .on("mouseout", function() {
-            d3.select(this).attr("r", 6);
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr("r", 6);
             hideTooltip();
         })
         .on("click", function(event, d) {
@@ -170,15 +184,19 @@ function initTimeline() {
     
     function zoomed(event) {
         const newXScale = event.transform.rescaleX(xScale);
-        gX.call(d3.axisBottom(newXScale).tickFormat(d3.timeFormat("%Y")));
+        gX.call(d3.axisBottom(newXScale).tickFormat(d3.timeFormat("%Y-%m-%d")));
         points.selectAll("circle")
             .attr("cx", d => newXScale(new Date(d.date)));
+        // 更新背景线
+        svg.select(".timeline-background-line")
+            .attr("x1", newXScale.range()[0])
+            .attr("x2", newXScale.range()[1]);
     }
     
     function updateAxis() {
         const xAxis = d3.axisBottom(xScale)
             .ticks(10)
-            .tickFormat(d3.timeFormat("%Y"));
+            .tickFormat(d3.timeFormat("%Y-%m-%d"));
         gX.call(xAxis);
     }
     

@@ -159,10 +159,15 @@ input[type="date"] {
     width: 80%;
     max-width: 800px;
     z-index: 1000;
+    border: 1px solid var(--border-color);
 }
 
 #timeline {
     margin-bottom: 10px;
+}
+
+#timeline svg {
+    background: var(--panel-bg);
 }
 
 .timeline-tip {
@@ -174,12 +179,14 @@ input[type="date"] {
 /* 时间轴样式 */
 .timeline-point {
     cursor: pointer;
-    fill: #0078A8;
+    fill: var(--primary-color);
     transition: all 0.2s;
+    r: 6;
 }
 
 .timeline-point:hover {
-    fill: #005580;
+    fill: var(--primary-hover-color);
+    r: 8;
 }
 
 .timeline-point.active {
@@ -189,12 +196,19 @@ input[type="date"] {
 
 .timeline-axis path,
 .timeline-axis line {
-    stroke: #ccc;
+    stroke: var(--border-color);
+    stroke-width: 1px;
 }
 
 .timeline-axis text {
+    fill: var(--text-color);
     font-size: 12px;
-    color: var(--secondary-text-color);
+}
+
+/* 添加时间轴背景线 */
+.timeline-background-line {
+    stroke: var(--border-color);
+    stroke-width: 1px;
 }
 
 /* 工具提示样式 */
@@ -203,18 +217,48 @@ input[type="date"] {
     background: var(--panel-bg);
     padding: 12px;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px var(--shadow-color);
     pointer-events: none;
     z-index: 1001;
     font-size: 14px;
     max-width: 200px;
     color: var(--text-color);
+    border: 1px solid var(--border-color);
 }
 
 .timeline-tooltip strong {
     display: block;
     margin-bottom: 5px;
-    color: #333;
+    color: var(--text-color);
+}
+
+/* Leaflet 弹出窗口样式覆盖 */
+.leaflet-popup-content-wrapper {
+    background: var(--panel-bg);
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 0;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    padding: 0;
+}
+
+.leaflet-popup-tip {
+    background: var(--panel-bg);
+}
+
+.leaflet-popup-close-button {
+    color: var(--text-color) !important;
+}
+
+.leaflet-popup-close-button:hover {
+    color: var(--primary-color) !important;
+}
+
+.leaflet-container a {
+    color: var(--primary-color);
 }
 
 /* 弹出窗口样式 */
@@ -222,6 +266,7 @@ input[type="date"] {
     max-width: 300px;
     background: var(--panel-bg);
     color: var(--text-color);
+    padding: 15px;
 }
 
 .event-popup h3 {
