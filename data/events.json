@@ -1,0 +1,26 @@
+{
+    "events": [
+        {
+            "event_name": "中国接入互联网",
+            "description": "1994年4月20日，中国通过Sprint公司连入Internet，实现了与Internet的全功能连接。",
+            "date": "1994-04-20",
+            "location": {
+                "latitude": 39.9042,
+                "longitude": 116.4074
+            },
+            "image": "data/images/china-internet.jpg",
+            "source": "https://example.com"
+        },
+        {
+            "event_name": "万维网诞生",
+            "description": "1989年，蒂姆·伯纳斯-李在欧洲核子研究中心（CERN）发明了万维网。",
+            "date": "1989-03-12",
+            "location": {
+                "latitude": 46.2324,
+                "longitude": 6.0559
+            },
+            "image": "data/images/www-birth.jpg",
+            "source": "https://example.com"
+        }
+    ]
+} 
