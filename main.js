@@ -34,7 +34,12 @@ function updateMapTheme(theme) {
 }
 
 // 初始化地图
-const map = L.map('map').setView([35, 105], 4); // 将初始视图设置在中国中心位置
+const map = L.map('map', {
+    minZoom: 2,  // 设置最小缩放级别
+    maxBounds: [[-90, -Infinity], [90, Infinity]], // 只限制南北方向，东西方向无限
+    maxBoundsViscosity: 1.0,  // 设置边界的"粘性"，1.0表示完全限制在边界内
+    worldCopyJump: true  // 允许地图在水平方向无限复制
+}).setView([35, 105], 4); // 将初始视图设置在中国中心位置
 
 // 添加OpenStreetMap图层
 map.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
