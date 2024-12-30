@@ -336,8 +336,11 @@ function showEventByIndex(index) {
         currentEventIndex = index;
         const event = events[index];
         
-        // 更新地图视图
-        map.setView([event.location.latitude, event.location.longitude], 6);
+        // 平滑地将事件位置移动到屏幕中心，保持当前缩放级别
+        map.panTo([event.location.latitude, event.location.longitude], {
+            animate: true,
+            duration: 0.5
+        });
         
         // 打开对应的标记弹窗
         markers[index].openPopup();
@@ -368,8 +371,11 @@ function filterMarkersByDate(selectedDate) {
     if (selectedEvent) {
         currentEventIndex = events.indexOf(selectedEvent);
         const marker = markers[currentEventIndex];
-        // 设置地图视图到选中的事件位置
-        map.setView([selectedEvent.location.latitude, selectedEvent.location.longitude], 8);
+        // 平滑地将事件位置移动到屏幕中心，保持当前缩放级别
+        map.panTo([selectedEvent.location.latitude, selectedEvent.location.longitude], {
+            animate: true,
+            duration: 0.5
+        });
         marker.openPopup();
         updateNavigationButtons();
     }
