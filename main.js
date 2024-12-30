@@ -44,6 +44,7 @@ map.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 let events = [];
 let markers = [];
 let timelineChart; // 存储时间轴实例
+let currentEventIndex = -1; // 当前选中的事件索引
 
 // 修改 loadEvents 函数
 async function loadEvents() {
@@ -267,6 +268,52 @@ function initEventListeners() {
 
     // 主题切换按钮
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    // 添加导航按钮事件监听
+    document.getElementById('prev-event').addEventListener('click', showPreviousEvent);
+    document.getElementById('next-event').addEventListener('click', showNextEvent);
+}
+
+function showPreviousEvent() {
+    if (currentEventIndex > 0) {
+        currentEventIndex--;
+        showEventByIndex(currentEventIndex);
+    }
+    updateNavigationButtons();
+}
+
+function showNextEvent() {
+    if (currentEventIndex < events.length - 1) {
+        currentEventIndex++;
+        showEventByIndex(currentEventIndex);
+    }
+    updateNavigationButtons();
+}
+
+function showEventByIndex(index) {
+    // 从地图上移除所有标记
+    markers.forEach(marker => map.removeLayer(marker));
+    
+    // 显示选中事件的标记
+    const event = events[index];
+    const marker = markers[index];
+    marker.addTo(map);
+    map.setView([event.location.latitude, event.location.longitude], 8);
+    marker.openPopup();
+
+    // 高亮时间轴上的点
+    d3.selectAll(".timeline-point").classed("active", false);
+    d3.selectAll(".timeline-point")
+        .filter((d, i) => i === index)
+        .classed("active", true);
+}
+
+function updateNavigationButtons() {
+    const prevButton = document.getElementById('prev-event');
+    const nextButton = document.getElementById('next-event');
+    
+    prevButton.disabled = currentEventIndex <= 0;
+    nextButton.disabled = currentEventIndex >= events.length - 1;
 }
 
 function filterMarkersByDate(selectedDate) {
@@ -276,15 +323,21 @@ function filterMarkersByDate(selectedDate) {
     // 找到选中日期的事件并显示对应标记
     const selectedEvent = events.find(e => e.date === selectedDate);
     if (selectedEvent) {
-        const marker = markers[events.indexOf(selectedEvent)];
+        currentEventIndex = events.indexOf(selectedEvent);
+        const marker = markers[currentEventIndex];
         marker.addTo(map);
         map.setView([selectedEvent.location.latitude, selectedEvent.location.longitude], 8);
         marker.openPopup();
+        updateNavigationButtons();
     }
 }
 
 function showAllMarkers() {
     markers.forEach(marker => marker.addTo(map));
+    currentEventIndex = -1;
+    updateNavigationButtons();
+    // 移除所有点的高亮
+    d3.selectAll(".timeline-point").classed("active", false);
 }
 
 function highlightPoint(element) {
