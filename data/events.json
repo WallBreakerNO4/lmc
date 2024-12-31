@@ -7,7 +7,8 @@
             "location": {
                 "latitude": 34.05,
                 "longitude": -118.25
-            }
+            },
+            "image": "data/images/ARPANET诞生.png"
         },
         {
             "event_name": "电子邮件发明",
@@ -16,7 +17,8 @@
             "location": {
                 "latitude": 42.360458,
                 "longitude": -71.057777
-            }
+            },
+            "image": "data/images/电子邮件发明.jpeg"
         },
         {
             "event_name": "TCP/IP协议提出",
@@ -25,7 +27,8 @@
             "location": {
                 "latitude": 34.05,
                 "longitude": -118.25
-            }
+            },
+            "image": "data/images/TCP IP协议提出.jpeg"
         },
         {
             "event_name": "Internet正式命名",
@@ -43,7 +46,8 @@
             "location": {
                 "latitude": 39.905556,
                 "longitude": 116.391389
-            }
+            },
+            "image": "data/images/中国顶级域名启用.jpg"
         },
         {
             "event_name": "万维网公开",
@@ -52,7 +56,8 @@
             "location": {
                 "latitude": 46.20,
                 "longitude": 6.15
-            }
+            },
+            "image": "data/images/万维网公开.jpg"
         },
         {
             "event_name": "电子商务时代开启",
@@ -61,7 +66,8 @@
             "location": {
                 "latitude": 47.60,
                 "longitude": -122.333333
-            }
+            },
+            "images": ["data/images/电子商务时代开启1.jpg", "data/images/电子商务时代开启2.jpg"]
         },
         {
             "event_name": "门户网站时代开启",
@@ -70,7 +76,8 @@
             "location": {
                 "latitude": 37.377500,
                 "longitude": -122.067500
-            }
+            },
+            "image": "data/images/门户网站时代开启.jpg"
         },
         {
             "event_name": "现代搜索引擎诞生",
@@ -79,7 +86,8 @@
             "location": {
                 "latitude": 37.4529,
                 "longitude": -122.1817
-            }
+            },
+            "images": ["data/images/现代搜索引擎诞生1.png", "data/images/现代搜索引擎诞生2.jpg"]
         },
         {
             "event_name": "中国门户网站兴起",
@@ -88,16 +96,8 @@
             "location": {
                 "latitude": 39.9042,
                 "longitude": 116.4074
-            }
-        },
-        {
-            "event_name": "新浪成立",
-            "description": "随着中国互联网用户井喷式的增加，大批企业涌现，网易（广州）、搜狐（北京）、新浪（北京）等门户网站均出现在这一年。同时，世界上第一款网络游戏也出现，标志着网络开始不仅仅作为通信与信息集成的工具与平台。",
-            "date": "1998-12-01",
-            "location": {
-                "latitude": 39.9042,
-                "longitude": 116.4074
-            }
+            },
+            "images": ["data/images/中国门户网站兴起1.jpg", "data/images/中国门户网站兴起2.jpg", "data/images/中国门户网站兴起3.png"]
         },
         {
             "event_name": "即时通讯时代到来",
@@ -106,7 +106,8 @@
             "location": {
                 "latitude": 22.5431,
                 "longitude": 114.0579
-            }
+            },
+            "image": "data/images/即时通讯时代到来.jpg"
         },
         {
             "event_name": "中国电子商务崛起",
@@ -115,7 +116,8 @@
             "location": {
                 "latitude": 30.2741,
                 "longitude": 120.1551
-            }
+            },
+            "image": "data/images/中国电子商务崛起.jpg"
         },
         {
             "event_name": "维基百科诞生",
@@ -124,7 +126,8 @@
             "location": {
                 "latitude": 37.227928,
                 "longitude": -77.401927
-            }
+            },
+            "image": "data/images/维基百科诞生.png"
         },
         {
             "event_name": "Web2.0时代开启",
@@ -142,7 +145,8 @@
             "location": {
                 "latitude": 42.360458,
                 "longitude": -71.057777
-            }
+            },
+            "image": "data/images/社交网络时代开启.jpg"
         },
         {
             "event_name": "视频分享平台诞生",
@@ -151,7 +155,8 @@
             "location": {
                 "latitude": 37.4226,
                 "longitude": -122.0806
-            }
+            },
+            "image": "data/images/视频分享平台诞生.jpg"
         },
         {
             "event_name": "流媒体时代到来",
@@ -160,7 +165,8 @@
             "location": {
                 "latitude": 37.2866,
                 "longitude": -121.9500
-            }
+            },
+            "image": "data/images/流媒体时代到来.png"
         },
         {
             "event_name": "中国UGC视频平台兴起",
@@ -169,7 +175,8 @@
             "location": {
                 "latitude": 31.2304,
                 "longitude": 121.4737
-            }
+            },
+            "image": "data/images/中国UGC视频平台兴起.png"
         },
         {
             "event_name": "第一代iPhone发布",
@@ -178,7 +185,8 @@
             "location": {
                 "latitude": 37.783333,
                 "longitude": -122.416667
-            }
+            },
+            "image": "data/images/第一代iPhone发布.png"
         },
         {
             "event_name": "比特币概念诞生",
@@ -187,7 +195,8 @@
             "location": {
                 "latitude": 60.166667,
                 "longitude": 24.95
-            }
+            },
+            "image": "data/images/比特币概念诞生.jpg"
         },
         {
             "event_name": "ChatGPT发布",
@@ -196,7 +205,8 @@
             "location": {
                 "latitude": 37.7749,
                 "longitude": -122.4194
-            }
+            },
+            "image": "data/images/ChatGPT发布.jpg"
         },
         {
             "event_name": "共享经济平台兴起",
@@ -205,7 +215,8 @@
             "location": {
                 "latitude": 37.7749,
                 "longitude": -122.4194
-            }
+            },
+            "images": ["data/images/共享经济平台兴起1.jpg", "data/images/共享经济平台兴起2.jpg"]
         },
         {
             "event_name": "直播平台兴起",
@@ -214,7 +225,8 @@
             "location": {
                 "latitude": 37.7749,
                 "longitude": -122.4194
-            }
+            },
+            "image": "data/images/Twitch-Logo-2019-284355.jpeg"
         }
     ]
 } 
