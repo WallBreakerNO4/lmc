@@ -80,20 +80,40 @@ function restoreState() {
 // 修改 loadEvents 函数
 async function loadEvents() {
     try {
+        console.log('开始加载事件数据...');
         const response = await fetch('data/events.json');
+        console.log('获取到响应:', response.status);
         const data = await response.json();
+        console.log('解析到事件数据:', data);
         events = data.events;
+        console.log('总共加载了', events.length, '个事件');
         
         // 按日期排序事件
         events.sort((a, b) => new Date(a.date) - new Date(b.date));
         
         // 添加事件标记
-        events.forEach(event => {
+        events.forEach((event, index) => {
+            console.log(`处理第 ${index + 1} 个事件:`, event.event_name);
+            // 调试信息：打印图片路径
+            if (event.image) {
+                console.log(`事件 ${event.event_name} 的单张图片:`, event.image);
+            }
+            if (event.images) {
+                console.log(`事件 ${event.event_name} 的多张图片:`, event.images);
+            }
+            
             const marker = L.marker([event.location.latitude, event.location.longitude])
                 .bindPopup(`
                     <div class="event-popup">
                         <h3>${event.event_name}</h3>
-                        ${event.image ? `<img src="${event.image}" alt="${event.event_name}" class="event-image">` : ''}
+                        ${event.images ? 
+                            event.images.map(img => {
+                                console.log(`渲染图片:`, img);
+                                return `<img src="${encodeURI(img)}" alt="${event.event_name}" class="event-image" onerror="console.error('图片加载失败:', this.src);">`;
+                            }).join('') 
+                            : event.image ? 
+                                `<img src="${encodeURI(event.image)}" alt="${event.event_name}" class="event-image" onerror="console.error('图片加载失败:', this.src);">` 
+                                : ''}
                         <p>${event.description}</p>
                         <p class="event-date">日期：${event.date}</p>
                         ${event.source ? `<p class="event-source">来源：<a href="${event.source}" target="_blank">查看详情</a></p>` : ''}
@@ -102,18 +122,23 @@ async function loadEvents() {
             markers.push(marker);
         });
         
-        // 先显示所有标记，再初始化时间轴
+        console.log('开始显示所有标记...');
         showAllMarkers();
+        console.log('初始化时间轴...');
         initTimeline();
+        console.log('初始化事件监听器...');
         initEventListeners();
 
         // 尝试恢复保存的状态，如果没有则显示最早的事件
         const restoredIndex = restoreState();
         if (restoredIndex === -1) {
+            console.log('显示第一个事件...');
             showEventByIndex(0); // 显示最早的事件
         }
     } catch (error) {
         console.error('加载事件数据失败:', error);
+        console.error('错误详情:', error.message);
+        console.error('错误堆栈:', error.stack);
     }
 }
 
