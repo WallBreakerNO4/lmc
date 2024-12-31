@@ -91,4 +91,4 @@ python -m http.server
 
 ## 许可证 📄
 
-[选择合适的开源许可证]
+MIT License
